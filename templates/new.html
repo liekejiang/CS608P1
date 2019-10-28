@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import form_field %}
+
+{% block title %}INSERT{% endblock %}
+
+{% block content %}
+<h2>{{ database_name }}</h2>
+
+<form method="post">
+    {{ form.csrf_token }}
+    {% for field in form if field.widget.input_type != 'hidden' and field.type != 'SubmitField' %}
+    <div>
+    {{ field.label }}<br>
+    {{ field }}<br> 
+    </div>
+    {% endfor %}
+    {{ form.csrf_token }}
+    {{ form.submit_btn(class='btn') }}
+
+</form>
+{% endblock %}

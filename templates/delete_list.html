@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import form_field %}
+
+<script type="text/javascript">
+    function GETInWebRefresh(url,database_name,attrs,) {
+        var data = {}
+
+
+
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(data),
+            async: true
+        });
+    }
+</script>
+
+
+{% block title %}Search Result{% endblock %}
+
+{% block content %}
+
+<h2>{{ database_name }}</h2>
+
+    <table>
+        <thead>
+        {% for attr in attrs %}
+            <th>{{attr}}</th>
+        {% endfor %}    
+            <th>Operation</th>
+        </thead>
+        <tbody>
+          <meta charset="UTF-8">
+          {% for data in querydata %}
+          <tr>
+          {% for attr in attrs %}
+          <td>{{ data.__dict__[attr]}}</td>
+          {% endfor %}
+          <td>
+          {% if database_name in ['Companies','Fighters','Models','Weapons','Engines'] %}    
+            <form method="post" action="{{ url_for('delete_data_btn', database_name=database_name, prikey = data.__dict__[prikey],prikeyname = prikey) }}">
+                {{ form.csrf_token }}
+                {{ form.submit(class='btn') }}
+            </form>  
+          {% else %}
+          <form method="post" action="{{ url_for('delete_data_btn', database_name=database_name, prikey =data.__dict__[attrs[0]]+' '+data.__dict__[attrs[1]]+' '+data.__dict__[attrs[2]],prikeyname = attrs[0]+' '+attrs[1]+' '+attrs[2] )}}">
+                {{ form.csrf_token }}
+                {{ form.submit(class='btn') }}
+          </form>  
+          {% endif %}
+          </td>
+
+          </tr>
+
+          {% endfor %}
+        </tbody>
+    </table> 
+
+{% endblock %}

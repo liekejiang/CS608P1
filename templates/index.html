@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>China Air Force database(fake)----Fighter</h1>
+    <a href="https://en.wikipedia.org/wiki/People%27s_Liberation_Army_Air_Force">WIKI</a>
+
+    <h4>7 database:</h4>
+    {% for name in database[:-2] %}
+        <div class="database">
+            <p>{{ name }}</p>
+            <a class='btn' href="{{ url_for('new_data', database_name=name)}}">INSERT</a>
+            <a class='btn' href="{{ url_for('edit_data', database_name = name)}}">UPDATE</a> 
+            <a class='btn' href="{{ url_for('search_data', database_name=name) }}">SEARCH</a>
+            <a class='btn' href="{{ url_for('show_data',database_name = name)}}">SHOW</a>
+            <a class='btn' href="{{ url_for('delete_data',database_name = name)}}">DELETE</a>
+
+
+        </div>
+    {% endfor %}
+    {% for name in database[-2:] %}
+        <div class="database">
+            <p>{{ name }}</p>
+            <a class='btn' href="{{ url_for('new_data', database_name=name)}}">INSERT</a>
+            <a class='btn' href="{{ url_for('search_data', database_name=name) }}">SEARCH</a>
+            <a class='btn' href="{{ url_for('show_data',database_name = name)}}">SHOW</a>
+            <a class='btn' href="{{ url_for('delete_data',database_name = name)}}">DELETE</a>
+        </div>
+    {% endfor %}
+{% endblock %}
